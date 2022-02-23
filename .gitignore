@@ -1,8 +1,8 @@
-#Ingore exe files
+#Ignore exe files
 *.exe
 
-#Ingore linux compiler files
+#Ignore linux compiler files
 /main
 
-#Ingore VsCode files
+#Ignore VsCode files
 .vscode/
