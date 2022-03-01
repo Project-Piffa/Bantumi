@@ -155,13 +155,13 @@ int main()
         getmouseclick(WM_LBUTTONDOWN, x0, y0);
         if (x0 > 580 && x0 < 620 && y0 > 460 && y0 < 500)
         {
-            ai == true;
+            ai = true;
             okpt2 = true;
         }
         else if (x0 > 660 && x0 < 700 && y0 > 460 && y0 < 500)
             okpt2 = true;
     } while (okpt2 == false);
-    readBMP("Board1.bmp");
+    // readBMP("Board1.bmp");
     bool gioca_ancora = false;
     do
     {
@@ -177,7 +177,7 @@ int main()
         bool gioco = true, ciotole1a0 = true, ciotole2a0 = true;
         srand(time(0));
         int n = rand() % 4 + 3;
-        int ciotole[14] = {n, n, n, n, n, n, 40, n, n, n, n, n, n, 0};
+        int ciotole[14] = {1, 0, 0, 1, 0, 0, 0, 0, 5, 0, 0, 1, 0, 0}; //{n, n, n, n, n, n, 0, n, n, n, n, n, n, 0}
         int mossa, player = rand() % 2 + 1, posizione;
         while (gioco == true)
         {
@@ -330,11 +330,63 @@ int main()
                 do
                 {
                     stampa_semi(ciotole);
-                    do
+                    if (ai == false)
                     {
-                        mossa = mouse2();
-                    } while (ciotole[mossa + 6] == 0);
-                    posizione = mossa + 6;
+                        do
+                        {
+                            mossa = mouse2();
+                        } while (ciotole[mossa + 6] == 0);
+                        posizione = mossa + 6;
+                    }
+                    else
+                    {
+                        bool scelto = false;
+                        for (int z = 7; z < 13; z++)
+                        {
+                            if (ciotole[z] != 0 && 13 - z - ciotole[z] == 0)
+                            {
+                                posizione = z;
+                                scelto = true;
+                                break;
+                            }
+                        }
+                        if (scelto == false)
+                        {
+                            int a = -1;
+                            for (int z = 0; z < 6; z++)
+                            {
+                                if (ciotole[ciotole[z] + z] == 0)
+                                {
+                                    if (ciotole[13 - z] > ciotole[a])
+                                        a = 13 - z;
+                                }
+                            }
+                            if (a != -1 && ciotole[a] != 0)
+                            {
+                                posizione = a;
+                                scelto = true;
+                            }
+                        }
+                        if (scelto == false)
+                        {
+                            for (int z = 7; z < 13; z++)
+                            {
+                                if (z + ciotole[z] < 13 && ciotole[(ciotole[z] + z)] == 0 && ciotole[z] != 0)
+                                {
+                                    posizione = z;
+                                    scelto = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (scelto == false)
+                        {
+                            do
+                            {
+                                posizione = (rand() % 5) + 7;
+                            } while (ciotole[posizione] == 0);
+                        }
+                    }
                     int i = 0, idk;
                     for (; i < ciotole[posizione]; i++)
                     {
@@ -451,6 +503,9 @@ int main()
                         rigioca = true;
                     else
                         rigioca = false;
+
+                    if (ai == true)
+                        delay(2000);
 
                 } while (rigioca == true);
                 player = 1;
