@@ -144,8 +144,7 @@ int main()
     bool ok = false, ai = false, okpt2 = false;
     int x0, y0;
     initwindow(1280, 960, "Bantumi");
-    rectangle(590, 460, 630, 500);
-    rectangle(650, 460, 690, 500);
+    readBMP("menu.bmp");
     do
     {
         while (!ismouseclick(WM_LBUTTONDOWN))
@@ -153,15 +152,16 @@ int main()
             delay(500);
         }
         getmouseclick(WM_LBUTTONDOWN, x0, y0);
-        if (x0 > 580 && x0 < 620 && y0 > 460 && y0 < 500)
+        if (x0 > 776 && x0 < 982 && y0 > 377 && y0 < 582)
         {
             ai = true;
             okpt2 = true;
         }
-        else if (x0 > 660 && x0 < 700 && y0 > 460 && y0 < 500)
+        else if (x0 > 304 && x0 < 511 && y0 > 377 && y0 < 582)
             okpt2 = true;
     } while (okpt2 == false);
-    // readBMP("Board1.bmp");
+    cleardevice();
+    readBMP("Board1.bmp");
     bool gioca_ancora = false;
     do
     {
@@ -177,7 +177,7 @@ int main()
         bool gioco = true, ciotole1a0 = true, ciotole2a0 = true;
         srand(time(0));
         int n = rand() % 4 + 3;
-        int ciotole[14] = {1, 0, 0, 1, 0, 0, 0, 0, 5, 0, 0, 1, 0, 0}; //{n, n, n, n, n, n, 0, n, n, n, n, n, n, 0}
+        int ciotole[14] = {n, n, n, n, n, n, 0, n, n, n, n, n, n, 0};
         int mossa, player = rand() % 2 + 1, posizione;
         while (gioco == true)
         {
@@ -381,10 +381,21 @@ int main()
                         }
                         if (scelto == false)
                         {
-                            do
+                            int pluto;
+                            for (int pippo = 7; pippo < 13; pippo++)
                             {
-                                posizione = (rand() % 5) + 7;
-                            } while (ciotole[posizione] == 0);
+                                if (ciotole[pippo] == 0)
+                                    pluto++;
+                                else
+                                    posizione = pippo;
+                            }
+                            if (pluto != 5)
+                            {
+                                do
+                                {
+                                    posizione = (rand() % 5) + 7;
+                                } while (ciotole[posizione] == 0);
+                            }
                         }
                     }
                     int i = 0, idk;
@@ -514,10 +525,3 @@ int main()
     } while (gioca_ancora == true);
     getch();
 }
-
-/*
-To do:
-    - Finish graphics
-    - Ai
-
-*/
