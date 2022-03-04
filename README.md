@@ -20,7 +20,7 @@
 To download the source code you just need to type this in a bash:
 
 ```console
-Project-Piffa@main:~$ git clone https://github.com/Project-Piffa/Bantumi
+Project-Piffa@main:~$ git clone https://github.com/matteopiffari/Bantumi
 ```
 
 ## 🎈 Usage <a name="usage"></a>
